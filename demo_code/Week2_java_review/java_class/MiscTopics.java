@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-
+import java.io.File;
 /**
  * Demonstrates topics needed for the course: arrays, Scanners, and random numbers.
  * 
@@ -55,8 +55,11 @@ public class MiscTopics {
        /////////////////////////////////////////////
        
        // make a scanner to read user input
+       // make a scanner to read from a file
+//	try {
+  //     Scanner scan = new Scanner(new File("./test.dat"));
        Scanner scan = new Scanner(System.in);
-        
+
        System.out.println("Enter a word: ");
        String word = scan.next(); // read a word that was entered
        System.out.println("You entered: " + word);
@@ -65,6 +68,8 @@ public class MiscTopics {
        int num1 = scan.nextInt(); // read a number that was entered
        int num2 = scan.nextInt(); // read another number
        System.out.println("Entered numbers are " + num1 + " and " + num2);
+//	} catch (Exception e) {
+//	}
 
     }
     
