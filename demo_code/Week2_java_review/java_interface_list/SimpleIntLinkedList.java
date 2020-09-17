@@ -5,104 +5,112 @@ import java.util.ListIterator;
 
 
 public class SimpleIntLinkedList {
-    /**
-     * A node within the linked list. Each node contains one data element
-     * and a reference to the successor node in the list.
-     */
+    //node should be inner class
+    //for reasons:
+    //1) only simpleIntLinkedList will use it
+    //2) Outer class can directly access next or data
     private static class Node {
         private int data;
-        private Node next; // null if the last list element
-
-        public Node(int data, Node next) {
-            this.data = data;
-            this.next = next;
+        private Node next;
+        public Node(int d, Node node) {
+            this.data = d;
+            this.next = node;
         }
-
-        public Node(int data) {
-            this(data, null);
+        public Node(int d) {
+            this(d, null);
         }
     }
 
-    // first node in the list
     private Node head;
-
-    // number of nodes
     private int size;
 
-    /**
-     * Construct an empty linked list.
-     */
     public SimpleIntLinkedList() {
+        //this must be empty
         head = null;
         size = 0;
     }
 
-    public boolean add(int element) {
-        if (head == null) {
-            head = new Node(element);
-        } else {
-            Node finger = head;
-            while (finger.next != null) {
-                finger = finger.next;
-            }
-            // finger is now the last node in the list (i.e. finger.next is null)
-            finger.next = new Node(element);
-        }
-        size++;
-        return true;
+    public int size() {
+        //#1 no counter. walk through the list and count the elements
+        //#2 busy update. whenever you add/delete, we incre/decre a counter
+        //pros and cons?
+        return size;
     }
-
-    public int get(int index) {
-        Node finger = head;
-        for (int i = 0; i < index; i++) {
-            finger = finger.next;
+    //Precondition: index must be [0, size]
+    //
+    public void add(int index, int newdata) throws
+            IndexOutOfBoundsException {
+        if(index <0 || index>size) {
+            throw new IndexOutOfBoundsException();
         }
-        return finger.data;
-    }
-
-    public int set(int index, int element) {
-        Node finger = head;
-        for (int i = 0; i < index; i++) {
-            finger = finger.next;
-        }
-        int oldValue = finger.data;
-        finger.data = element;
-        return oldValue;
-    }
-
-    public void add(int index, int element) {
-        if (head == null) {
-            // note: assumes that index is also 0
-            head = new Node(element);
+        // 1. create a node that holds new data
+        Node newnode = new Node (newdata);
+        //2. find the spot to insert
+        if(index == 0 ) {
+            //insert at the head
+             newnode.next = head;
+             head = newnode;
         } else {
             Node finger = head;
             Node previous = null;
-            for (int i = 0; i < index; i++) {
+            for(int i=0; i<index;i++) {
                 previous = finger;
                 finger = finger.next;
             }
-            previous.next = new Node(element, finger);
+            //3.inserting b/w previous and finger nodes
+            previous.next = newnode;
+            newnode.next = finger;
+        }
+        size ++;
+    }
+    public void add(int newdata) {
+        if (head == null) {
+            head = new Node(newdata);
+        }  else {
+            Node newNode = new Node(newdata);
+            Node finger = head; //start with 1st node
+            //if finger points to last node in list?
+            //if so, inject new data here
+            //or, move on to the next
+            while (finger.next !=null) {
+                finger = finger.next;
+            }
+            finger.next = newNode;
         }
         size++;
     }
-
-    public int remove(int index) {
-        int oldValue;
+    //say: remove 3rd element in the list
+    //index starts with zero
+    // removing 3
+    public void remove(int index) {
         if (index == 0) {
-            oldValue = head.data;
+            //never never never lose track of head!
             head = head.next;
         } else {
             Node finger = head;
-            for (int i = 0; i < index - 1; i++) { // stop 1 before index!
+            for(int i=0; i<index-1; i++) {
                 finger = finger.next;
             }
-            oldValue = finger.next.data;
             finger.next = finger.next.next;
         }
-        size--;
-        return oldValue;
+        size --;
     }
 
+    //precondition: 0<index<size;
+    //postcondition: return the value of index-th node (index starting with 0) in the list.
+    public int get(int index) {
+        if(index <0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            Node finger = head;
+            for(int i=0; i<index-1; i++) {
+                finger = finger.next;
+            }
+            return finger.data;
+        }
+
+    }
     // run a test of a linked list
     public static void main(String[] args) {
         SimpleIntLinkedList list = new SimpleIntLinkedList();
