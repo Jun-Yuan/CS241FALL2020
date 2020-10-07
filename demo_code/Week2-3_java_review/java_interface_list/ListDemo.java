@@ -4,7 +4,8 @@ import java.util.ArrayList;
 /**
  * A demo of working with Lists.
  * @author Sean Barker
- */
+ * updated by Jun Yuan
+*/
 public class ListDemo {
  
     public static void arrayDemo() {
