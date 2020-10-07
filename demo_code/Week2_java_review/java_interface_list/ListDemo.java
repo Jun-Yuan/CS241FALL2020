@@ -9,10 +9,10 @@ public class ListDemo {
  
     public static void arrayDemo() {
       String[] colleges = new String[3];
-      colleges[0] = "Bowdoin";
-      colleges[1] = "Bates";
-      colleges[2] = "Colby";
-      colleges[2] = "Williams"; // replaces Colby
+      colleges[0] = "Pace";
+      colleges[1] = "CUNY";
+      colleges[2] = "Fordham";
+      colleges[2] = "NJIT"; // replaces Colby
       
       String name = colleges[1];
       System.out.println("college 1 is " + name);
@@ -22,10 +22,10 @@ public class ListDemo {
     
     public static void listDemo() {      
         List<String> colleges = new ArrayList<String>();
-        colleges.add("Bowdoin");
-        colleges.add("Bates");
-        colleges.add("Colby");
-        colleges.set(2, "Williams"); // replaces Colby
+        colleges.add("Pace");
+        colleges.add("CUNY");
+        colleges.add("Fordham");
+        colleges.set(2, "NJIT"); // replaces Colby
 
         String name = colleges.get(1);
         System.out.println("college 1 is " + name);
