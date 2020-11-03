@@ -37,7 +37,34 @@ public class SearchDemo
         }
         return -1;
     }
-    
+    //binarySearch2(a, 5, 0, size-1)
+    public int binarySearch2(int [] a, int key, int low, int high){
+        //how big is the array? if high==low, there is only one element
+        //then there is no point keep on shrinking.
+        //that is the base case
+        //key step 1 is to have a base case, so you do not have to
+        //infinitely recursively call yourself
+        if(high == low ) {
+            //only one element
+            if(a[low]==key) return low;//found it
+            else return -1;
+        } else {
+            //your array is at least 2 elements
+
+            int mid = (low+high)/2;
+            //search left
+            int retfromLeftSearch = binarySearch2(a, key, low, mid);
+            int retfromRightSearch = binarySearch2(a, key, mid+1, high);
+    //key step 2 of recursion:
+            if(retfromLeftSearch != -1) return retfromLeftSearch;
+            else if(retfromRightSearch != -1) return retfromRightSearch;
+            else return -1;
+        }
+
+
+    }
+
+
     public void userValueSearch(int[] arr)
     {
         Scanner scanner = new Scanner(System.in);
